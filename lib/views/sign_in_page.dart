@@ -10,23 +10,22 @@ class SigninPage extends StatefulWidget {
 
 class _SigninPageState extends State<SigninPage>
     with SingleTickerProviderStateMixin {
-  // AnimationController _animationController;
+  AnimationController? _animationController;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _animationController = new AnimationController(
-  //     vsync: this,
-  //     duration: Duration(seconds: 2),
-  //   );
-  // }
+  @override
+  void initState() {
+    super.initState();
+    _animationController = new AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 2),
+    );
+  }
 
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   super.dispose();
-  //   _animationController.dispose();
-  // }
+  @override
+  void dispose() {
+    super.dispose();
+    _animationController!.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,15 @@ class _SigninPageState extends State<SigninPage>
         children: <Widget>[
           SizedBox.expand(
             child: CustomPaint(
-              painter: BackgroundPainter(),
+              painter: BackgroundPainter(animation: _animationController!.view),
+            ),
+          ),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                _animationController!.forward(from: 0);
+              },
+              child: Text("Animate"),
             ),
           ),
         ],
