@@ -1,24 +1,49 @@
 // A class to custom paint the sign in screen
 
+import 'dart:ui' as ui;
 import 'dart:ui';
 
 import 'package:flutter/animation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
+import 'package:get/route_manager.dart';
 import 'package:project_haajar/model/sign_in_page/springCurve.dart';
-
-import '../../model/sign_in_page/palette.dart';
 
 class BackgroundPainter extends CustomPainter {
   //Accessing Palette class constants
   BackgroundPainter({Animation<double> animation})
       : bluePaint = Paint()
-          ..color = Palette.lightBlue
+          // ..color =  Palette.darkBlue
+          ..shader = ui.Gradient.linear(
+            Offset(0, 0),
+            Offset(Get.size.width / 2, Get.size.height),
+            [
+              Color(0xff000046),
+              Color(0xff1CB5E0),
+            ],
+          )
           ..style = PaintingStyle.fill,
         greyPaint = Paint()
-          ..color = Palette.darkBlue
+          // ..color = Palette.darkBlue
+          ..shader = ui.Gradient.linear(
+            Offset(0, 0),
+            Offset(Get.size.width / 2, Get.size.height),
+            [
+              Color(0xff141E30),
+              Color(0xff243B55),
+            ],
+          )
           ..style = PaintingStyle.fill,
         orangePaint = Paint()
-          ..color = Palette.orange
+          // ..color = Palette.orange
+          ..shader = ui.Gradient.linear(
+            Offset(0, 0),
+            Offset(Get.size.width / 2, Get.size.height),
+            [
+              Color(0xffc21500),
+              Color(0xffffc500),
+            ],
+          )
           ..style = PaintingStyle.fill,
         blueAnimation = CurvedAnimation(
             parent: animation,
