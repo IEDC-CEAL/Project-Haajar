@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
 import 'package:project_haajar/model/sign_in_page/palette.dart';
 
@@ -59,7 +58,7 @@ class SignInBar extends StatelessWidget {
       padding: EdgeInsets.all(22.0),
       shape: const CircleBorder(),
       child: Icon(
-        FontAwesomeIcons.chevronRight,
+        Icons.arrow_forward_ios,
         color: Colors.white70,
         size: deviceHeight * 0.035,
       ),
