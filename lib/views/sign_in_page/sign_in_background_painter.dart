@@ -4,14 +4,13 @@ import 'dart:ui';
 
 import 'package:flutter/animation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:project_haajar/model/springCurve.dart';
+import 'package:project_haajar/model/sign_in_page/springCurve.dart';
 
-import '../model/point.dart';
-import '../model/palette.dart';
+import '../../model/sign_in_page/palette.dart';
 
 class BackgroundPainter extends CustomPainter {
   //Accessing Palette class constants
-  BackgroundPainter({required Animation<double> animation})
+  BackgroundPainter({Animation<double> animation})
       : bluePaint = Paint()
           ..color = Palette.lightBlue
           ..style = PaintingStyle.fill,
@@ -74,19 +73,18 @@ class BackgroundPainter extends CustomPainter {
     path.moveTo(size.width, size.height / 2);
     path.lineTo(size.width, 0);
     path.lineTo(0, 0);
-    path.lineTo(0, lerpDouble(0, size.height, blueAnimation.value)!);
+    path.lineTo(0, lerpDouble(0, size.height, blueAnimation.value));
     _addPointsToPath(path, [
-      Point(lerpDouble(0, size.width / 3, blueAnimation.value)!,
-          lerpDouble(0, size.height, blueAnimation.value)!),
+      Point(lerpDouble(0, size.width / 3, blueAnimation.value),
+          lerpDouble(0, size.height, blueAnimation.value)),
       Point(
+          lerpDouble(size.width / 2, size.width / 4 * 3, liquidAnimation.value),
           lerpDouble(
-              size.width / 2, size.width / 4 * 3, liquidAnimation.value)!,
-          lerpDouble(
-              size.height / 2, size.height / 4 * 3, liquidAnimation.value)!),
+              size.height / 2, size.height / 4 * 3, liquidAnimation.value)),
       Point(
           size.width,
           lerpDouble(
-              size.height / 2, size.height * 3 / 4, liquidAnimation.value)!),
+              size.height / 2, size.height * 3 / 4, liquidAnimation.value)),
     ]);
     canvas.drawPath(path, bluePaint);
   }
@@ -102,7 +100,7 @@ class BackgroundPainter extends CustomPainter {
         size.height / 4,
         size.height / 2,
         greyAnimation.value,
-      )!,
+      ),
     );
     _addPointsToPath(
       path,
@@ -110,19 +108,19 @@ class BackgroundPainter extends CustomPainter {
         Point(
           size.width / 4,
           lerpDouble(
-              size.height / 2, size.height * 3 / 4, liquidAnimation.value)!,
+              size.height / 2, size.height * 3 / 4, liquidAnimation.value),
         ),
         Point(
           size.width * 3 / 5,
-          lerpDouble(size.height / 4, size.height / 2, liquidAnimation.value)!,
+          lerpDouble(size.height / 4, size.height / 2, liquidAnimation.value),
         ),
         Point(
           size.width * 4 / 5,
-          lerpDouble(size.height / 6, size.height / 3, greyAnimation.value)!,
+          lerpDouble(size.height / 6, size.height / 3, greyAnimation.value),
         ),
         Point(
           size.width,
-          lerpDouble(size.height / 5, size.height / 4, greyAnimation.value)!,
+          lerpDouble(size.height / 5, size.height / 4, greyAnimation.value),
         ),
       ],
     );
@@ -138,28 +136,27 @@ class BackgroundPainter extends CustomPainter {
       path.lineTo(0, 0);
       path.lineTo(
         0,
-        lerpDouble(0, size.height / 12, orangeAnimation.value)!,
+        lerpDouble(0, size.height / 12, orangeAnimation.value),
       );
 
       _addPointsToPath(path, [
         Point(
           size.width / 7,
-          lerpDouble(0, size.height / 6, liquidAnimation.value)!,
+          lerpDouble(0, size.height / 6, liquidAnimation.value),
         ),
         Point(
           size.width / 3,
-          lerpDouble(0, size.height / 10, liquidAnimation.value)!,
+          lerpDouble(0, size.height / 10, liquidAnimation.value),
         ),
         Point(
           size.width / 3 * 2,
-          lerpDouble(0, size.height / 8, liquidAnimation.value)!,
+          lerpDouble(0, size.height / 8, liquidAnimation.value),
         ),
         Point(
           size.width * 3 / 4,
           0,
         ),
       ]);
-
       canvas.drawPath(path, orangePaint);
     }
   }
@@ -187,4 +184,11 @@ class BackgroundPainter extends CustomPainter {
         points[points.length - 1].x,
         points[points.length - 1].y);
   }
+}
+
+class Point {
+  final double x;
+  final double y;
+
+  Point(this.x, this.y);
 }

@@ -1,4 +1,4 @@
-package com.example.project_haajar
+package com.iedcceal.project_haajar
 
 import io.flutter.embedding.android.FlutterActivity
 

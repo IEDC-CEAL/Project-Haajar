@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.project_haajar">
+    package="com.iedcceal.project_haajar">
    <application
         android:label="project_haajar"
         android:icon="@mipmap/ic_launcher">
