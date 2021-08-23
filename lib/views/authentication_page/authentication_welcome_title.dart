@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 
-class SignInTitle extends StatelessWidget {
-  const SignInTitle(this.title);
+class AuthenticationWelcomeTitle extends StatelessWidget {
+  const AuthenticationWelcomeTitle(this.title);
 
   final String title;
   @override

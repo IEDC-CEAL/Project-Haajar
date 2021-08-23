@@ -1,45 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/route_manager.dart';
 import 'package:project_haajar/model/sign_in_page/palette.dart';
 
-class SignUpBar extends StatelessWidget {
-  SignUpBar({this.label, this.onPressed, this.isLoading});
+class SignInBar extends StatelessWidget {
+  SignInBar({this.label, this.onPressed, this.isLoading});
 
   final String label;
   final VoidCallback onPressed;
   final bool isLoading;
 
+  final deviceHeight = Get.size.height;
+  final deviceWidth = Get.size.width;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16),
+      padding: EdgeInsets.symmetric(vertical: deviceHeight * 0.05),
       child: Row(
         children: <Widget>[
           Text(label,
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.w800,
-                fontSize: 24,
-                color: Colors.white,
+                fontSize: deviceWidth * 0.07,
+                color: Palette.darkBlue,
               )),
           Expanded(
             child: Center(
-              child: _LoadingIndicator(isLoading: isLoading),
+              child: _loadingIndicator(isLoading: isLoading),
             ),
           ),
-          _RoundContinueButton(onPressed: onPressed),
+          _roundContinueButton(onPressed: onPressed),
         ],
       ),
     );
   }
-}
 
-class _LoadingIndicator extends StatelessWidget {
-  const _LoadingIndicator({@required this.isLoading});
-
-  final bool isLoading;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _loadingIndicator({bool isLoading}) {
     return ConstrainedBox(
       constraints: const BoxConstraints(
         maxWidth: 100,
@@ -52,15 +49,8 @@ class _LoadingIndicator extends StatelessWidget {
       ),
     );
   }
-}
 
-class _RoundContinueButton extends StatelessWidget {
-  const _RoundContinueButton({@required this.onPressed});
-
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _roundContinueButton({VoidCallback onPressed}) {
     return RawMaterialButton(
       onPressed: onPressed,
       elevation: 0.0,
@@ -68,10 +58,10 @@ class _RoundContinueButton extends StatelessWidget {
       splashColor: Palette.darkOrange,
       padding: EdgeInsets.all(22.0),
       shape: const CircleBorder(),
-      child: const Icon(
-        FontAwesomeIcons.longArrowAltRight,
-        color: Colors.white,
-        size: 24.0,
+      child: Icon(
+        FontAwesomeIcons.chevronRight,
+        color: Colors.white70,
+        size: deviceHeight * 0.035,
       ),
     );
   }

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:project_haajar/model/sign_in_page/palette.dart';
-import 'package:project_haajar/views/sign_in_page/sign_in_title.dart';
-import 'package:project_haajar/views/sign_in_page/sign_up_bar.dart';
+import 'package:project_haajar/views/authentication_page/authentication_welcome_title.dart';
+import 'package:project_haajar/views/authentication_page/sign_up_bar.dart';
 
-import 'form_textfield_input_decorations.dart';
-
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({Key key, @required this.onSignInPressed})
-      : super(key: key);
+class SignUpPage extends StatelessWidget {
+  SignUpPage({Key key, @required this.onSignInPressed}) : super(key: key);
 
   final VoidCallback onSignInPressed;
+  final deviceHeight = Get.size.height;
+  final deviceWidth = Get.size.width;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class RegisterPage extends StatelessWidget {
               flex: 3,
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: SignInTitle("Create\nAccount"),
+                child: AuthenticationWelcomeTitle("Create\nAccount"),
               ),
             ),
             Expanded(
@@ -34,8 +33,13 @@ class RegisterPage extends StatelessWidget {
                     padding:
                         EdgeInsets.symmetric(vertical: Get.size.width * 0.025),
                     child: TextFormField(
+                      style: TextStyle(
+                        color: Colors.white70,
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                      textAlign: TextAlign.center,
                       decoration: registerInputDecoration(
-                        hintText: "Email",
+                        hintText: "Enter Your Email",
                       ),
                     ),
                   ),
@@ -43,7 +47,14 @@ class RegisterPage extends StatelessWidget {
                     padding:
                         EdgeInsets.symmetric(vertical: Get.size.width * 0.025),
                     child: TextFormField(
-                      decoration: registerInputDecoration(hintText: "Password"),
+                      style: TextStyle(
+                        color: Colors.white70,
+                      ),
+                      keyboardType: TextInputType.visiblePassword,
+                      textAlign: TextAlign.center,
+                      obscureText: true,
+                      decoration: registerInputDecoration(
+                          hintText: "Enter your Password"),
                     ),
                   ),
                   SignUpBar(
@@ -76,6 +87,30 @@ class RegisterPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  InputDecoration registerInputDecoration({
+    @required String hintText,
+  }) {
+    return InputDecoration(
+      contentPadding: EdgeInsets.symmetric(vertical: deviceHeight * 0.028),
+      hintStyle:
+          TextStyle(color: Colors.white70, fontSize: deviceWidth * 0.043),
+      hintText: hintText,
+      focusedBorder: const UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.white, width: 2),
+      ),
+      enabledBorder: const UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.white70),
+      ),
+      errorBorder: const UnderlineInputBorder(
+        borderSide: BorderSide(color: Palette.orange),
+      ),
+      focusedErrorBorder: const UnderlineInputBorder(
+        borderSide: BorderSide(width: 2.0, color: Palette.orange),
+      ),
+      errorStyle: const TextStyle(color: Colors.white),
     );
   }
 }

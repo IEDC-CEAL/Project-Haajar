@@ -1,19 +1,19 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:project_haajar/views/sign_in_page/sign_up_page.dart';
 
-import 'sign_in_ui.dart';
-import 'sign_in_background_painter.dart';
+import 'sign_up_page.dart';
+import 'sign_in_page.dart';
+import 'authentication_page_background_painter.dart';
 
-class SigninPage extends StatefulWidget {
-  const SigninPage({Key key}) : super(key: key);
+class AuthenticationPage extends StatefulWidget {
+  const AuthenticationPage({Key key}) : super(key: key);
 
   @override
-  _SigninPageState createState() => _SigninPageState();
+  _AuthenticationPageState createState() => _AuthenticationPageState();
 }
 
-class _SigninPageState extends State<SigninPage>
+class _AuthenticationPageState extends State<AuthenticationPage>
     with SingleTickerProviderStateMixin {
   AnimationController _animationController;
 
@@ -36,18 +36,27 @@ class _SigninPageState extends State<SigninPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          SizedBox.expand(
-            child: CustomPaint(
-              painter: BackgroundPainter(animation: _animationController.view),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [Color(0xff00416A), Color(0xffE4E5E6)]),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Stack(
+          children: <Widget>[
+            SizedBox.expand(
+              child: CustomPaint(
+                painter: AuthenticationPageBackgroundPainter(
+                    animation: _animationController.view),
+              ),
             ),
-          ),
-          Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 800),
-              child: ValueListenableBuilder<bool>(
+            Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 800),
+                child: ValueListenableBuilder<bool>(
                   valueListenable: showSignInPage,
                   builder: (context, value, child) {
                     return PageTransitionSwitcher(
@@ -65,24 +74,25 @@ class _SigninPageState extends State<SigninPage>
                         );
                       },
                       child: value
-                          ? SignInUI(
-                              onRegisterClicked: () {
+                          ? SignInPage(
+                              onSignUpClicked: () {
                                 showSignInPage.value = false;
                                 _animationController.forward();
                               },
                             )
-                          : RegisterPage(
+                          : SignUpPage(
                               onSignInPressed: () {
                                 showSignInPage.value = true;
                                 _animationController.reverse();
                               },
                             ),
                     );
-                    //
-                  }),
+                  }, //builder Close
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

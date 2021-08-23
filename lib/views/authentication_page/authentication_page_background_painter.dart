@@ -1,17 +1,16 @@
 // A class to custom paint the sign in screen
 
 import 'dart:ui' as ui;
-import 'dart:ui';
+import 'dart:math';
 
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/route_manager.dart';
-import 'package:project_haajar/model/sign_in_page/springCurve.dart';
 
-class BackgroundPainter extends CustomPainter {
+class AuthenticationPageBackgroundPainter extends CustomPainter {
   //Accessing Palette class constants
-  BackgroundPainter({Animation<double> animation})
+  AuthenticationPageBackgroundPainter({Animation<double> animation})
       : bluePaint = Paint()
           // ..color =  Palette.darkBlue
           ..shader = ui.Gradient.linear(
@@ -98,17 +97,18 @@ class BackgroundPainter extends CustomPainter {
     path.moveTo(size.width, size.height / 2);
     path.lineTo(size.width, 0);
     path.lineTo(0, 0);
-    path.lineTo(0, lerpDouble(0, size.height, blueAnimation.value));
+    path.lineTo(0, ui.lerpDouble(0, size.height, blueAnimation.value));
     _addPointsToPath(path, [
-      Point(lerpDouble(0, size.width / 3, blueAnimation.value),
-          lerpDouble(0, size.height, blueAnimation.value)),
+      Point(ui.lerpDouble(0, size.width / 3, blueAnimation.value),
+          ui.lerpDouble(0, size.height, blueAnimation.value)),
       Point(
-          lerpDouble(size.width / 2, size.width / 4 * 3, liquidAnimation.value),
-          lerpDouble(
+          ui.lerpDouble(
+              size.width / 2, size.width / 4 * 3, liquidAnimation.value),
+          ui.lerpDouble(
               size.height / 2, size.height / 4 * 3, liquidAnimation.value)),
       Point(
           size.width,
-          lerpDouble(
+          ui.lerpDouble(
               size.height / 2, size.height * 3 / 4, liquidAnimation.value)),
     ]);
     canvas.drawPath(path, bluePaint);
@@ -121,7 +121,7 @@ class BackgroundPainter extends CustomPainter {
     path.lineTo(0, 0);
     path.lineTo(
       0,
-      lerpDouble(
+      ui.lerpDouble(
         size.height / 4,
         size.height / 2,
         greyAnimation.value,
@@ -132,20 +132,21 @@ class BackgroundPainter extends CustomPainter {
       [
         Point(
           size.width / 4,
-          lerpDouble(
+          ui.lerpDouble(
               size.height / 2, size.height * 3 / 4, liquidAnimation.value),
         ),
         Point(
           size.width * 3 / 5,
-          lerpDouble(size.height / 4, size.height / 2, liquidAnimation.value),
+          ui.lerpDouble(
+              size.height / 4, size.height / 2, liquidAnimation.value),
         ),
         Point(
           size.width * 4 / 5,
-          lerpDouble(size.height / 6, size.height / 3, greyAnimation.value),
+          ui.lerpDouble(size.height / 6, size.height / 3, greyAnimation.value),
         ),
         Point(
           size.width,
-          lerpDouble(size.height / 5, size.height / 4, greyAnimation.value),
+          ui.lerpDouble(size.height / 5, size.height / 4, greyAnimation.value),
         ),
       ],
     );
@@ -161,21 +162,21 @@ class BackgroundPainter extends CustomPainter {
       path.lineTo(0, 0);
       path.lineTo(
         0,
-        lerpDouble(0, size.height / 12, orangeAnimation.value),
+        ui.lerpDouble(0, size.height / 12, orangeAnimation.value),
       );
 
       _addPointsToPath(path, [
         Point(
           size.width / 7,
-          lerpDouble(0, size.height / 6, liquidAnimation.value),
+          ui.lerpDouble(0, size.height / 6, liquidAnimation.value),
         ),
         Point(
           size.width / 3,
-          lerpDouble(0, size.height / 10, liquidAnimation.value),
+          ui.lerpDouble(0, size.height / 10, liquidAnimation.value),
         ),
         Point(
           size.width / 3 * 2,
-          lerpDouble(0, size.height / 8, liquidAnimation.value),
+          ui.lerpDouble(0, size.height / 8, liquidAnimation.value),
         ),
         Point(
           size.width * 3 / 4,
@@ -216,4 +217,15 @@ class Point {
   final double y;
 
   Point(this.x, this.y);
+}
+
+class SpringCurve extends Curve {
+  const SpringCurve({this.a = 0.15, this.w = 19.4});
+
+  final double a;
+  final double w;
+
+  double transformInternal(double t) {
+    return (-(pow(e, -t / a) * cos(t * w)) + 1).toDouble();
+  }
 }

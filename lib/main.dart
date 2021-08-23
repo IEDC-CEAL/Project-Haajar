@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project_haajar/model/sign_in_page/palette.dart';
-import 'package:project_haajar/views/sign_in_page/sign_in_page.dart';
+import 'package:project_haajar/views/authentication_page/authentication_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         ),
         primarySwatch: Colors.blue,
       ),
-      home: SigninPage(),
+      home: AuthenticationPage(),
     );
   }
 }
