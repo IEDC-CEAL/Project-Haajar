@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+
 import 'package:project_haajar/model/sign_in_page/palette.dart';
 
 class SignInBar extends StatelessWidget {

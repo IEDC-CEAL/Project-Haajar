@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Project Haajar',
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        textTheme: GoogleFonts.mulishTextTheme(),
+        textTheme: GoogleFonts.barlowTextTheme(),
         accentColor: Palette.darkOrange,
         appBarTheme: const AppBarTheme(
           brightness: Brightness.dark,

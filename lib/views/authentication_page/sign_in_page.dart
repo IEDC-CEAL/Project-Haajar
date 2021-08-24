@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:get/get_instance/get_instance.dart';
+
+import 'package:project_haajar/controllers/sign_in_controller.dart';
+import 'package:project_haajar/model/sign_in_page/form_scroll_behaviour_class.dart';
 import 'package:project_haajar/model/sign_in_page/palette.dart';
 import 'package:project_haajar/views/authentication_page/sign_in_bar.dart';
 import 'authentication_welcome_title.dart';
@@ -11,9 +15,12 @@ class SignInPage extends StatelessWidget {
   final deviceHeight = Get.size.height;
   final deviceWidth = Get.size.width;
 
+  final signInController = Get.put(SignInController());
+
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: signInController.signInFormKey,
       child: Padding(
         padding: EdgeInsets.all(deviceWidth * 0.07),
         child: Column(
@@ -29,34 +36,48 @@ class SignInPage extends StatelessWidget {
               flex: 4,
               child: Container(
                 child: ScrollConfiguration(
-                  behavior: MyBehaviour(),
+                  behavior: FormScrollBehaviourClass(),
                   child: ListView(
                     children: <Widget>[
                       Padding(
                         padding:
-                            EdgeInsets.symmetric(vertical: deviceWidth * 0.02),
+                            EdgeInsets.symmetric(vertical: deviceWidth * 0.01),
                         child: TextFormField(
+                          controller: signInController.emailController,
+                          onSaved: (email) {
+                            signInController.email = email;
+                          },
                           keyboardType: TextInputType.emailAddress,
                           decoration: signInInputDecoration(
                               hintText: "Enter your Email"),
                           textAlign: TextAlign.center,
+                          validator: (email) =>
+                              signInController.validateEmail(email),
                         ),
                       ),
                       Padding(
                         padding:
-                            EdgeInsets.symmetric(vertical: deviceWidth * 0.02),
+                            EdgeInsets.symmetric(vertical: deviceWidth * 0.01),
                         child: TextFormField(
+                          controller: signInController.passwordController,
+                          onSaved: (password) {
+                            signInController.password = password;
+                          },
                           obscureText: true,
                           keyboardType: TextInputType.visiblePassword,
                           textAlign: TextAlign.center,
                           decoration: signInInputDecoration(
                               hintText: "Enter your Password"),
+                          validator: (password) {
+                            return signInController.validatePassword(password);
+                          },
                         ),
                       ),
                       SignInBar(
                         isLoading: false,
                         label: "Sign In",
                         onPressed: () {
+                          signInController.checkLogin();
                           print("Button Pressed");
                         },
                       ),
@@ -103,20 +124,12 @@ class SignInPage extends StatelessWidget {
         borderSide: BorderSide(color: Colors.black),
       ),
       errorBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: Palette.darkOrange),
+        borderSide: BorderSide(color: Colors.red),
       ),
       focusedErrorBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(width: 2.0, color: Palette.darkOrange),
+        borderSide: BorderSide(width: 2.0, color: Colors.red),
       ),
-      errorStyle: const TextStyle(color: Palette.darkOrange),
+      errorStyle: const TextStyle(color: Colors.red),
     );
-  }
-}
-
-class MyBehaviour extends ScrollBehavior {
-  @override
-  Widget buildViewportChrome(
-      BuildContext context, Widget child, AxisDirection axisDirection) {
-    return child;
   }
 }
