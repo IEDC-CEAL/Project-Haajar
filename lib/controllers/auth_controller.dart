@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_haajar/root.dart';
+import 'package:project_haajar/views/authentication_page/authentication_page.dart';
 
 class AuthController extends GetxController {
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -19,7 +20,7 @@ class AuthController extends GetxController {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
-      Get.offAll(Root());
+      Get.offAll(() => Root());
     } on FirebaseAuthException catch (e) {
       Get.snackbar(
         "Error Creating User",
@@ -48,7 +49,7 @@ class AuthController extends GetxController {
     try {
       isLoading.value = true;
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-      Get.offAll(Root());
+      Get.offAll(() => Root());
     } on FirebaseAuthException catch (e) {
       Get.snackbar(
         "Error Signing In",
@@ -98,25 +99,27 @@ class AuthController extends GetxController {
     }
   }
 
-  // FirebaseFirestore _db = FirebaseFirestore.instance;
+  FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  // void saveUser(User user) async {
-  //   Map<String, dynamic> userData = {
-  //     "name": user.displayName,
-  //     "email": user.email,
-  //     "last_login": user.metadata.lastSignInTime.millisecondsSinceEpoch,
-  //     "created_at": user.metadata.creationTime.millisecondsSinceEpoch,
-  //     "role": "student",
-  //   };
+  void saveUser(User user) async {
+    Map<String, dynamic> userData = {
+      "name": user.displayName,
+      "email": user.email,
+      "last_login":
+          "${user.metadata.lastSignInTime.hour} : ${user.metadata.lastSignInTime.minute}",
+      "created_at":
+          "${user.metadata.creationTime.day}/${user.metadata.creationTime.month}/${user.metadata.creationTime.year}",
+      "role": "student",
+    };
 
-  //   final userRef = _db.collection("users").doc(user.email);
+    final userRef = _db.collection("users").doc(user.email);
 
-  //   if ((await userRef.get()).exists) {
-  //     await userRef.update({
-  //       "last_login": user.metadata.lastSignInTime.millisecondsSinceEpoch,
-  //     });
-  //   } else {
-  //     await userRef.set(userData);
-  //   }
-  // }
+    if ((await userRef.get()).exists) {
+      await userRef.update({
+        "last_login": user.metadata.lastSignInTime.minute,
+      });
+    } else {
+      await userRef.set(userData);
+    }
+  }
 }
