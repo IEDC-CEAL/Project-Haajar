@@ -21,7 +21,7 @@ class SignUpBar extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: deviceHeight * 0.05),
       child: Row(
         children: <Widget>[
-          Text("Sign In",
+          Text("Sign Up",
               style: TextStyle(
                 fontWeight: FontWeight.w800,
                 fontSize: deviceWidth * 0.07,
