@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:project_haajar/controllers/auth_controller.dart';
 import 'package:project_haajar/controllers/sign_up_controller.dart';
 import 'package:project_haajar/model/sign_in_page/form_scroll_behaviour_class.dart';
 import 'package:project_haajar/model/sign_in_page/palette.dart';
@@ -15,6 +16,7 @@ class SignUpPage extends StatelessWidget {
   final deviceWidth = Get.size.width;
 
   final SignUpController _signUpController = Get.put(SignUpController());
+  final AuthController _authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -102,11 +104,15 @@ class SignUpPage extends StatelessWidget {
                       ),
                     ),
                     SignUpBar(
-                      isLoading: false,
-                      label: "Sign Up",
                       onPressed: () {
                         _signUpController.checkLogin();
                         print("Button Pressed");
+                        if ((_signUpController.password ==
+                                _signUpController.confirmPassword) &&
+                            _signUpController.password.length >= 6) {
+                          _authController.createUser(_signUpController.email,
+                              _signUpController.confirmPassword);
+                        }
                       },
                     ),
                     Align(

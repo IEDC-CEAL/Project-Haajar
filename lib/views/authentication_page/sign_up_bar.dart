@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/route_manager.dart';
+import 'package:project_haajar/controllers/auth_controller.dart';
 import 'package:project_haajar/model/sign_in_page/palette.dart';
+import 'package:get/get.dart';
 
 class SignUpBar extends StatelessWidget {
-  SignUpBar({this.label, this.onPressed, this.isLoading});
+  SignUpBar({this.onPressed});
 
-  final String label;
   final VoidCallback onPressed;
-  final bool isLoading;
 
   final deviceHeight = Get.size.height;
   final deviceWidth = Get.size.width;
+
+  final _authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class SignUpBar extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: deviceHeight * 0.05),
       child: Row(
         children: <Widget>[
-          Text(label,
+          Text("Sign In",
               style: TextStyle(
                 fontWeight: FontWeight.w800,
                 fontSize: deviceWidth * 0.07,
@@ -26,7 +29,7 @@ class SignUpBar extends StatelessWidget {
               )),
           Expanded(
             child: Center(
-              child: _loadingIndicator(isLoading: isLoading),
+              child: _loadingIndicator(),
             ),
           ),
           _roundContinueButton(onPressed: onPressed),
@@ -35,17 +38,17 @@ class SignUpBar extends StatelessWidget {
     );
   }
 
-  Widget _loadingIndicator({bool isLoading}) {
+  Widget _loadingIndicator() {
     return ConstrainedBox(
       constraints: const BoxConstraints(
         maxWidth: 100,
       ),
-      child: Visibility(
-        visible: isLoading,
-        child: const LinearProgressIndicator(
-          backgroundColor: Palette.darkBlue,
-        ),
-      ),
+      child: Obx(() => Visibility(
+            visible: _authController.isLoading.value,
+            child: const LinearProgressIndicator(
+              backgroundColor: Palette.darkBlue,
+            ),
+          )),
     );
   }
 

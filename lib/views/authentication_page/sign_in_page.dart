@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/get_instance/get_instance.dart';
+import 'package:project_haajar/controllers/auth_controller.dart';
 
 import 'package:project_haajar/controllers/sign_in_controller.dart';
 import 'package:project_haajar/model/sign_in_page/form_scroll_behaviour_class.dart';
@@ -16,10 +17,12 @@ class SignInPage extends StatelessWidget {
   final deviceWidth = Get.size.width;
 
   final signInController = Get.put(SignInController());
+  final authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
     return Form(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       key: signInController.signInFormKey,
       child: Padding(
         padding: EdgeInsets.all(deviceWidth * 0.07),
@@ -74,11 +77,11 @@ class SignInPage extends StatelessWidget {
                         ),
                       ),
                       SignInBar(
-                        isLoading: false,
-                        label: "Sign In",
                         onPressed: () {
                           signInController.checkLogin();
                           print("Button Pressed");
+                          authController.signIn(signInController.email,
+                              signInController.password);
                         },
                       ),
                       Align(
