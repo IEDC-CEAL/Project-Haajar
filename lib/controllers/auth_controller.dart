@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +10,7 @@ class AuthController extends GetxController {
 
   Rx<bool> isLoading = false.obs;
 
-  Stream<User> authStateChanges() => _auth.authStateChanges();
+  Stream<User> userStream() => _auth.authStateChanges();
 
   void createUser(String email, String password) async {
     try {
@@ -95,30 +94,6 @@ class AuthController extends GetxController {
           color: Colors.red,
         ),
       );
-    }
-  }
-
-  FirebaseFirestore _db = FirebaseFirestore.instance;
-
-  void saveUser(User user) async {
-    Map<String, dynamic> userData = {
-      "name": user.displayName,
-      "email": user.email,
-      "role": "student",
-      // "last_login":
-      //     "${user.metadata.lastSignInTime.hour} : ${user.metadata.lastSignInTime.minute}",
-      // "created_at":
-      //     "${user.metadata.creationTime.day}/${user.metadata.creationTime.month}/${user.metadata.creationTime.year}",
-    };
-
-    final userRef = _db.collection("users").doc(user.email);
-
-    if ((await userRef.get()).exists) {
-      // await userRef.update({
-      //   "last_login": user.metadata.lastSignInTime.minute,
-      // });
-    } else {
-      await userRef.set(userData);
     }
   }
 }
